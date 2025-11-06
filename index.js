@@ -9,12 +9,17 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+const sslOpitions = {
+    ca: fs.readFileSync('./BaltimoreCyberTrustRoot.crt.pem'), //caminho para certificado CA
+}
+
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
+    host: 'servidorallan.database.windows.net',
+    user: 'root@',
+    password: 'Cedup@2025',
     database: 'gestaoCondominios',
-    port: 3306
+    port: 3306,
+    ssl: sslOpitions //opções de segurança
 });
 
 connection.connect((err) => {
@@ -511,6 +516,4 @@ app.get('/moradores', (req, res) => {
     app.get('/manutencao', (req, res) => {
         });
 
-app.listen(8083, () => {
-    console.log("Servidor rodando na url http://localhost:8083");
-});
+module.exports = app;
